@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Ejercicios progresivos de PSeInt para 1.º DAW · IES Álvaro Falomir" />
+  <title>PSeInt · Programación 1.º DAW · IES Álvaro Falomir</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">&lt;/&gt;</div>
+      <div>
+        <strong>Programación · 1.º DAW</strong>
+        <span>IES Álvaro Falomir · Curso 2026/27</span>
+      </div>
+    </div>
+    <div class="top-actions">
+      <a class="btn ghost" href="guia.html">Guía de algoritmos</a>
+      <a class="btn ghost" href="docs/Guia_Algoritmos_PSeInt_1DAW.pdf" target="_blank">Guía PDF</a>
+      <a class="btn ghost" href="https://www.pseint-web.app/" target="_blank" rel="noopener">Abrir PSeInt Web ↗</a>
+      <button id="resetBtn" class="btn ghost danger" type="button">Reiniciar progreso</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="sidebar">
+      <section class="card student-card">
+        <label for="studentName">Nombre y apellidos</label>
+        <input id="studentName" type="text" autocomplete="name" placeholder="Ej.: Ana García López" />
+        <p class="help">El nombre aparecerá en el justificante final.</p>
+      </section>
+
+      <section class="card progress-card">
+        <div class="progress-title">
+          <span>Progreso</span>
+          <strong id="progressText">0 / 30</strong>
+        </div>
+        <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
+        <small id="progressPercent">0 % completado</small>
+      </section>
+
+      <nav id="blockNav" class="block-nav" aria-label="Bloques de ejercicios"></nav>
+
+      <section class="card info-card">
+        <strong>Material de apoyo</strong>
+        <p class="help"><a href="guia.html">Leer la guía de algoritmos y diagramas</a></p>
+        <p class="help"><a href="docs/Guia_Algoritmos_PSeInt_1DAW.pdf" target="_blank">Descargar guía en PDF</a></p>
+      </section>
+
+      <section class="card info-card">
+        <strong>Cómo trabajar</strong>
+        <ol>
+          <li>Lee el enunciado.</li>
+          <li>Escribe tu algoritmo.</li>
+          <li>Pulsa <b>Validar</b>.</li>
+          <li>Corrige hasta superarlo.</li>
+        </ol>
+      </section>
+    </aside>
+
+    <section class="content">
+      <section class="hero">
+        <div>
+          <span class="eyebrow">Aprender haciendo</span>
+          <h1>PSeInt paso a paso</h1>
+          <p>Empieza escribiendo y ejecutando algoritmos desde el primer minuto. Cada ejercicio se valida automáticamente y queda guardado en este navegador.</p>
+        </div>
+        <div class="hero-code" aria-hidden="true">
+<pre>Algoritmo HolaMundo
+    Escribir "Hola mundo";
+FinAlgoritmo</pre>
+        </div>
+      </section>
+
+      <section id="exerciseList" class="exercise-list"></section>
+
+      <section class="finish-card">
+        <div>
+          <span class="eyebrow">Entrega</span>
+          <h2>Finalizar práctica</h2>
+          <p>Cuando hayas validado todos los ejercicios, genera tu justificante. Incluye nombre, fecha, resultado y un código de verificación local.</p>
+        </div>
+        <button id="finishBtn" class="btn primary large" type="button">Finalizar y generar justificante</button>
+        <p id="finishHint" class="finish-hint">Debes completar los 30 ejercicios para finalizar.</p>
+      </section>
+    </section>
+  </main>
+
+  <div id="receiptModal" class="modal" hidden>
+    <div class="modal-backdrop" data-close-modal></div>
+    <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="receiptTitle">
+      <button class="modal-close" type="button" data-close-modal aria-label="Cerrar">×</button>
+      <div id="receipt" class="receipt">
+        <div class="receipt-head">
+          <div class="receipt-mark">✓</div>
+          <div>
+            <p class="receipt-kicker">IES Álvaro Falomir · 1.º DAW</p>
+            <h2 id="receiptTitle">Justificante de finalización</h2>
+          </div>
+        </div>
+        <div class="receipt-grid">
+          <div><span>Alumno/a</span><strong id="rName"></strong></div>
+          <div><span>Actividad</span><strong>PSeInt · Fundamentos</strong></div>
+          <div><span>Ejercicios superados</span><strong id="rScore"></strong></div>
+          <div><span>Fecha y hora</span><strong id="rDate"></strong></div>
+          <div class="full"><span>Código de verificación</span><strong id="rCode" class="verify-code"></strong></div>
+        </div>
+        <p class="receipt-note">Este justificante ha sido generado por la web de prácticas en el navegador del alumno. No constituye una firma digital ni sustituye al registro del aula virtual.</p>
+      </div>
+      <div class="modal-actions">
+        <button id="downloadReceiptBtn" class="btn ghost" type="button">Descargar justificante HTML</button>
+        <button id="printReceiptBtn" class="btn primary" type="button">Imprimir / Guardar en PDF</button>
+      </div>
+    </section>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
