@@ -145,12 +145,50 @@ function saveState(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}
 function simpleHash(str){let h=2166136261;for(let i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,16777619)}return (h>>>0).toString(16).toUpperCase().padStart(8,'0')}
 
 function finalize(){
-  const name=studentName.value.trim(); const done=exercises.filter(e=>state.done[e.id]).length;
-  if(!name){studentName.focus();alert('Escribe tu nombre y apellidos antes de finalizar.');return}
-  if(done!==exercises.length){alert(`Todavía faltan ${exercises.length-done} ejercicios por validar.`);return}
-  const now=new Date(); const when=now.toLocaleString('es-ES',{dateStyle:'long',timeStyle:'short'}); const code='FAL-'+simpleHash(`${name}|${now.toISOString()}|${done}`);
-  document.querySelector('#rName').textContent=name;document.querySelector('#rScore').textContent=`${done} / ${exercises.length} (100 %)`;document.querySelector('#rDate').textContent=when;document.querySelector('#rCode').textContent=code;
-  state.lastReceipt={name,when,code,iso:now.toISOString()};saveState();document.querySelector('#receiptModal').hidden=false;
+  const name = studentName.value.trim();
+  const done = exercises.filter(e => state.done[e.id]).length;
+  const total = exercises.length;
+  const pct = Math.round(done / total * 100);
+
+  if(!name){
+    studentName.focus();
+    alert('Escribe tu nombre y apellidos antes de finalizar.');
+    return;
+  }
+
+  const now = new Date();
+
+  const when = now.toLocaleString('es-ES',{
+    dateStyle:'long',
+    timeStyle:'short'
+  });
+
+  const code = 'FAL-' + simpleHash(
+    `${name}|${now.toISOString()}|${done}|${total}`
+  );
+
+  document.querySelector('#rName').textContent = name;
+
+  document.querySelector('#rScore').textContent =
+    `${done} / ${total} (${pct} %)`;
+
+  document.querySelector('#rDate').textContent = when;
+
+  document.querySelector('#rCode').textContent = code;
+
+  state.lastReceipt = {
+    name,
+    when,
+    code,
+    iso: now.toISOString(),
+    done,
+    total,
+    pct
+  };
+
+  saveState();
+
+  document.querySelector('#receiptModal').hidden = false;
 }
 function downloadReceipt(){
   const r=state.lastReceipt;if(!r)return;const html=`<!doctype html><meta charset="utf-8"><title>Justificante PSeInt</title><style>body{font-family:Arial,sans-serif;max-width:800px;margin:40px auto;color:#14213d}section{border:2px solid #dbe5f2;border-radius:16px;padding:28px}h1{margin-top:0}.g{display:grid;grid-template-columns:1fr 1fr;gap:14px}.g div{background:#f6f8fb;padding:14px;border-radius:10px}.g span,.g strong{display:block}.g span{color:#66758c;font-size:12px;margin-bottom:4px}.code{letter-spacing:2px;font-family:monospace}.note{font-size:12px;color:#66758c;margin-top:22px}@media print{body{margin:0;max-width:none}}</style><section><h1>Justificante de finalización</h1><p>IES Álvaro Falomir · 1.º DAW · Curso 2026/27</p><div class="g"><div><span>Alumno/a</span><strong>${escapeHtml(r.name)}</strong></div><div><span>Actividad</span><strong>PSeInt · Fundamentos</strong></div><div><span>Ejercicios superados</span><strong>30 / 30 (100 %)</strong></div><div><span>Fecha y hora</span><strong>${escapeHtml(r.when)}</strong></div><div style="grid-column:1/-1"><span>Código de verificación</span><strong class="code">${r.code}</strong></div></div><p class="note">Generado por la web de prácticas en el navegador del alumno. No constituye firma digital ni sustituye al registro del aula virtual.</p></section>`;
