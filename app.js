@@ -144,11 +144,20 @@ function loadState(){try{const s=JSON.parse(localStorage.getItem(STORAGE_KEY));r
 function saveState(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}
 function simpleHash(str){let h=2166136261;for(let i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,16777619)}return (h>>>0).toString(16).toUpperCase().padStart(8,'0')}
 
+function computeGrade(done,total){return Math.round((done/total*10)*100)/100}
+function exerciseBreakdown(){
+  return exercises.map(e=>({id:e.id,block:e.block,title:e.title,ok:!!state.done[e.id]}))
+}
+function renderExerciseRows(list){
+  return list.map(e=>`<tr><td>${e.id}</td><td>${escapeHtml(e.block)}</td><td>${escapeHtml(e.title)}</td><td class="${e.ok?'state-ok':'state-bad'}">${e.ok?'✓ Superado':'✗ Pendiente'}</td></tr>`).join('')
+}
 function finalize(){
   const name = studentName.value.trim();
   const done = exercises.filter(e => state.done[e.id]).length;
   const total = exercises.length;
   const pct = Math.round(done / total * 100);
+  const grade = computeGrade(done,total);
+  const breakdown = exerciseBreakdown();
 
   if(!name){
     studentName.focus();
@@ -172,9 +181,13 @@ function finalize(){
   document.querySelector('#rScore').textContent =
     `${done} / ${total} (${pct} %)`;
 
+  document.querySelector('#rGrade').textContent = `${grade.toFixed(2)} / 10`;
+
   document.querySelector('#rDate').textContent = when;
 
   document.querySelector('#rCode').textContent = code;
+
+  document.querySelector('#rExerciseList').innerHTML = renderExerciseRows(breakdown);
 
   state.lastReceipt = {
     name,
@@ -183,7 +196,9 @@ function finalize(){
     iso: now.toISOString(),
     done,
     total,
-    pct
+    pct,
+    grade,
+    breakdown
   };
 
   saveState();
@@ -191,7 +206,9 @@ function finalize(){
   document.querySelector('#receiptModal').hidden = false;
 }
 function downloadReceipt(){
-  const r=state.lastReceipt;if(!r)return;const html=`<!doctype html><meta charset="utf-8"><title>Justificante PSeInt</title><style>body{font-family:Arial,sans-serif;max-width:800px;margin:40px auto;color:#14213d}section{border:2px solid #dbe5f2;border-radius:16px;padding:28px}h1{margin-top:0}.g{display:grid;grid-template-columns:1fr 1fr;gap:14px}.g div{background:#f6f8fb;padding:14px;border-radius:10px}.g span,.g strong{display:block}.g span{color:#66758c;font-size:12px;margin-bottom:4px}.code{letter-spacing:2px;font-family:monospace}.note{font-size:12px;color:#66758c;margin-top:22px}@media print{body{margin:0;max-width:none}}</style><section><h1>Justificante de finalización</h1><p>IES Álvaro Falomir · 1.º DAW · Curso 2026/27</p><div class="g"><div><span>Alumno/a</span><strong>${escapeHtml(r.name)}</strong></div><div><span>Actividad</span><strong>PSeInt · Fundamentos</strong></div><div><span>Ejercicios superados</span><strong>30 / 30 (100 %)</strong></div><div><span>Fecha y hora</span><strong>${escapeHtml(r.when)}</strong></div><div style="grid-column:1/-1"><span>Código de verificación</span><strong class="code">${r.code}</strong></div></div><p class="note">Generado por la web de prácticas en el navegador del alumno. No constituye firma digital ni sustituye al registro del aula virtual.</p></section>`;
+  const r=state.lastReceipt;if(!r)return;
+  const rows=renderExerciseRows(r.breakdown||[]);
+  const html=`<!doctype html><meta charset="utf-8"><title>Justificante PSeInt</title><style>body{font-family:Arial,sans-serif;max-width:800px;margin:40px auto;color:#14213d}section{border:2px solid #dbe5f2;border-radius:16px;padding:28px}h1{margin-top:0}.g{display:grid;grid-template-columns:1fr 1fr;gap:14px}.g div{background:#f6f8fb;padding:14px;border-radius:10px}.g span,.g strong{display:block}.g span{color:#66758c;font-size:12px;margin-bottom:4px}.code{letter-spacing:2px;font-family:monospace}.note{font-size:12px;color:#66758c;margin-top:22px}table{width:100%;border-collapse:collapse;margin-top:20px;font-size:13px}th,td{text-align:left;padding:6px 8px;border-bottom:1px solid #e5eaf2}th{color:#66758c;font-size:11px;text-transform:uppercase}td.ok{color:#148a5b;font-weight:700}td.bad{color:#c83f49;font-weight:700}@media print{body{margin:0;max-width:none}}</style><section><h1>Justificante de finalización</h1><p>IES Álvaro Falomir · 1.º DAW · Curso 2026/27</p><div class="g"><div><span>Alumno/a</span><strong>${escapeHtml(r.name)}</strong></div><div><span>Actividad</span><strong>PSeInt · Fundamentos</strong></div><div><span>Ejercicios superados</span><strong>${r.done} / ${r.total} (${r.pct} %)</strong></div><div><span>Nota</span><strong>${r.grade.toFixed(2)} / 10</strong></div><div><span>Fecha y hora</span><strong>${escapeHtml(r.when)}</strong></div><div style="grid-column:1/-1"><span>Código de verificación</span><strong class="code">${r.code}</strong></div></div><table><thead><tr><th>Nº</th><th>Bloque</th><th>Ejercicio</th><th>Estado</th></tr></thead><tbody>${rows.replace(/class="state-ok"/g,'class="ok"').replace(/class="state-bad"/g,'class="bad"')}</tbody></table><p class="note">Generado por la web de prácticas en el navegador del alumno. No constituye firma digital ni sustituye al registro del aula virtual.</p></section>`;
   const blob=new Blob([html],{type:'text/html;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`justificante_pseint_${safeFileName(r.name)}.html`;a.click();URL.revokeObjectURL(url)
 }
 function escapeHtml(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
