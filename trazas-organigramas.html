@@ -39,6 +39,10 @@
     .code-editor{width:100%;min-height:180px;resize:vertical;background:var(--code);color:#e9f0fb;border:0;border-radius:0 0 13px 13px;padding:16px 18px;font-family:"SFMono-Regular",Consolas,monospace;line-height:1.55;outline:none;box-sizing:border-box}
     .badge{font-size:.75rem;padding:5px 9px;border-radius:999px;background:#eaf2ff;color:#275da8}
     .badge.medium{background:#fff3db;color:#946000}
+    #justificante input{max-width:420px;margin-bottom:6px}
+    .finish-hint{color:var(--muted);font-size:.88rem;margin:10px 0 0}
+    .finish-hint.ready{color:var(--ok);font-weight:700}
+    .finish-hint.error{color:#c83f49;font-weight:700}
   </style>
 </head>
 <body>
@@ -93,9 +97,22 @@
     <a class="btn ghost" href="guia.html#diagramas">Ver teoría de diagramas de flujo</a>
   </div>
 
+  <section class="chapter" id="justificante">
+    <span class="eyebrow">Para terminar</span>
+    <h2>Genera tu justificante en PDF</h2>
+    <p>Escribe tu nombre y apellidos y descarga un PDF con tu resultado en estos 4 ejercicios (trazas y organigramas), a modo de justificante de la práctica.</p>
+    <label for="studentNamePdf">Nombre y apellidos</label>
+    <input type="text" id="studentNamePdf" placeholder="Nombre y apellidos" autocomplete="name">
+    <div class="exercise-actions">
+      <button class="btn primary large" type="button" id="generatePdfBtn">Generar justificante en PDF</button>
+    </div>
+    <p class="finish-hint" id="pdfHint"></p>
+  </section>
+
   <p class="footer">IES Álvaro Falomir · Programación · 1.º DAW · Curso 2026/27</p>
 </main>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
 <script src="trazas.js"></script>
 </body>
 </html>

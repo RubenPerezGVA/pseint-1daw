@@ -347,6 +347,103 @@ function attachEvents(){
   document.querySelectorAll('[data-validate-flow]').forEach(b=>b.addEventListener('click',()=>validateFlow(b.dataset.validateFlow)));
 }
 
+/* =====================================================================
+   JUSTIFICANTE EN PDF · resumen de trazas + organigramas
+   ===================================================================== */
+function simpleHash(str){let h=2166136261;for(let i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,16777619)}return (h>>>0).toString(16).toUpperCase().padStart(8,'0')}
+function safeFileName(s){return s.normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/gi,'_').replace(/^_|_$/g,'').toLowerCase()||'alumno'}
+
+function collectResults(){
+  const traceRows = traceExercises.map(e=>({title:e.title, ok:!!state.doneTrace[e.id]}));
+  const flowRows = flowExercises.map(e=>({title:e.title, ok:!!state.doneCode[e.id]}));
+  const rows = traceRows.concat(flowRows);
+  const done = rows.filter(r=>r.ok).length;
+  const total = rows.length;
+  const pct = Math.round(done/total*100);
+  const grade = Math.round((done/total*10)*100)/100;
+  return {rows, done, total, pct, grade};
+}
+
+function generatePdfReport(){
+  const nameInput = document.querySelector('#studentNamePdf');
+  const hint = document.querySelector('#pdfHint');
+  const name = nameInput.value.trim();
+  if(!name){
+    nameInput.focus();
+    hint.className = 'finish-hint error';
+    hint.textContent = 'Escribe tu nombre y apellidos antes de generar el PDF.';
+    return;
+  }
+  if(typeof window.jspdf === 'undefined'){
+    hint.className = 'finish-hint error';
+    hint.textContent = 'No se ha podido cargar el generador de PDF. Comprueba tu conexión a internet e inténtalo de nuevo.';
+    return;
+  }
+
+  const {rows, done, total, pct, grade} = collectResults();
+  const now = new Date();
+  const when = now.toLocaleString('es-ES',{dateStyle:'long', timeStyle:'short'});
+  const code = 'TRZ-' + simpleHash(`${name}|${now.toISOString()}|${done}|${total}`);
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({unit:'mm', format:'a4'});
+  const marginX = 20;
+  let y = 22;
+
+  doc.setFont('helvetica','bold'); doc.setFontSize(18);
+  doc.text('Justificante de finalización', marginX, y);
+  y += 7;
+  doc.setFont('helvetica','normal'); doc.setFontSize(10); doc.setTextColor(90,100,120);
+  doc.text('IES Álvaro Falomir · 1.º DAW · Trazas y organigramas · Curso 2026/27', marginX, y);
+  y += 10;
+  doc.setDrawColor(220,228,239); doc.line(marginX, y, 190, y);
+  y += 10;
+
+  doc.setTextColor(20,33,61);
+  const field = (label, value) => {
+    doc.setFont('helvetica','bold'); doc.setFontSize(11); doc.text(label, marginX, y);
+    doc.setFont('helvetica','normal'); doc.text(String(value), marginX + 45, y);
+    y += 8;
+  };
+  field('Alumno/a:', name);
+  field('Actividad:', 'Trazas y organigramas (PSeInt)');
+  field('Resultado:', `${done} / ${total} (${pct} %)`);
+  field('Nota:', `${grade.toFixed(2)} / 10`);
+  field('Fecha y hora:', when);
+  field('Código de verificación:', code);
+  y += 4;
+
+  doc.setFont('helvetica','bold'); doc.setFontSize(12);
+  doc.text('Detalle por ejercicio', marginX, y);
+  y += 8;
+
+  doc.setFontSize(10);
+  rows.forEach(r=>{
+    doc.setFont('helvetica','normal'); doc.setTextColor(20,33,61);
+    const lines = doc.splitTextToSize(r.title, 120);
+    doc.text(lines, marginX, y);
+    doc.setFont('helvetica','bold');
+    doc.setTextColor(r.ok ? 20 : 200, r.ok ? 140 : 60, r.ok ? 90 : 70);
+    doc.text(r.ok ? 'Superado' : 'Pendiente', 155, y);
+    y += Math.max(7, lines.length * 5.5);
+    doc.setDrawColor(230,235,242);
+    doc.line(marginX, y - 3, 190, y - 3);
+  });
+
+  y += 6;
+  doc.setFont('helvetica','normal'); doc.setFontSize(8.5); doc.setTextColor(100,110,130);
+  const note = 'Generado por la web de prácticas en el navegador del alumno. No constituye una firma digital ni sustituye al registro del aula virtual.';
+  doc.text(doc.splitTextToSize(note, 170), marginX, y);
+
+  doc.save(`justificante_trazas_organigramas_${safeFileName(name)}.pdf`);
+
+  hint.className = 'finish-hint ready';
+  hint.textContent = '✓ PDF generado y descargado.';
+}
+
+const pdfBtn = document.querySelector('#generatePdfBtn');
+if(pdfBtn) pdfBtn.addEventListener('click', generatePdfReport);
+
 function render(){
   document.querySelector('#traceList').innerHTML = traceExercises.map(renderTraceExercise).join('');
   document.querySelector('#flowList').innerHTML = flowExercises.map(renderFlowExercise).join('');
