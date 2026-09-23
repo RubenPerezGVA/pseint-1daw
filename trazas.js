@@ -376,7 +376,7 @@ function generatePdfReport(){
   }
   if(typeof window.jspdf === 'undefined'){
     hint.className = 'finish-hint error';
-    hint.textContent = 'No se ha podido cargar el generador de PDF. Comprueba tu conexión a internet e inténtalo de nuevo.';
+    hint.textContent = 'No se ha podido cargar el generador de PDF (recarga la página e inténtalo de nuevo).';
     return;
   }
 
