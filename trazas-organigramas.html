@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Ejercicios de trazas y de organigramas a código para 1.º DAW · PSeInt." />
+  <meta name="author" content="Rubén Pérez Ibáñez" />
+  <title>Trazas y organigramas · Ejercicios · 1.º DAW · IES Álvaro Falomir</title>
+  <link rel="stylesheet" href="guia.css" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .page{max-width:1220px;margin:0 auto;padding:30px 24px 70px}
+    .progress-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px 22px;box-shadow:var(--shadow);margin-bottom:28px}
+    .progress-title{display:flex;justify-content:space-between;gap:12px;font-weight:700}
+    .progress-track{height:10px;background:#e7edf5;border-radius:999px;overflow:hidden;margin:12px 0 4px}
+    .progress-bar{height:100%;width:0;background:linear-gradient(90deg,var(--primary),#4fa0ff);transition:width .25s ease}
+    section.chapter .exercise{background:#fbfcfe;border:1px solid var(--line);border-radius:18px;padding:20px 22px;margin:18px 0;box-shadow:none}
+    section.chapter .exercise.done{border-color:#9bd7bd}
+    .exercise-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:10px}
+    .exercise-num{font-weight:800}
+    .exercise-desc{color:var(--muted);margin:6px 0 0}
+    .status-pill{white-space:nowrap;background:#edf2f7;color:#66758c;border-radius:999px;padding:7px 10px;font-size:.8rem;font-weight:700}
+    .exercise.done .status-pill{background:#e2f6ed;color:var(--ok)}
+    .exercise-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    .feedback{margin-top:14px;padding:12px 14px;border-radius:12px;display:none;line-height:1.45}
+    .feedback.show{display:block}
+    .feedback.ok{background:#e5f7ee;color:#116b49}
+    .feedback.error{background:#fff0f1;color:#9c2e36}
+    .hint{margin-top:14px;padding:13px 15px;border-left:4px solid var(--primary);background:#f2f7ff;border-radius:8px;display:none;color:#40516c}
+    .hint.show{display:block}
+    .trace-table td{vertical-align:top;padding:10px}
+    .cell-label{display:block;font-size:.76rem;color:var(--muted);margin-bottom:4px;font-weight:700;text-transform:uppercase;letter-spacing:.02em}
+    .trace-table input,.trace-table select,.trace-output input{width:100%;min-width:70px;border:1px solid #cbd6e5;border-radius:8px;padding:8px 9px;font:inherit;background:#fff}
+    .trace-table input:focus,.trace-table select:focus,.trace-output input:focus{border-color:var(--primary);outline:none;box-shadow:0 0 0 3px rgba(11,110,253,.1)}
+    .trace-output{max-width:260px;margin-top:14px}
+    .flow-wrap{background:#fbfcfe;border:1px solid var(--line);border-radius:14px;padding:10px;margin:12px 0}
+    .editor-wrap{margin:14px 0}
+    .editor-toolbar{display:flex;justify-content:space-between;align-items:center;background:#0b1325;color:#aebbd0;padding:9px 12px;border-radius:13px 13px 0 0;font-size:.82rem}
+    .code-editor{width:100%;min-height:180px;resize:vertical;background:var(--code);color:#e9f0fb;border:0;border-radius:0 0 13px 13px;padding:16px 18px;font-family:"SFMono-Regular",Consolas,monospace;line-height:1.55;outline:none;box-sizing:border-box}
+    .badge{font-size:.75rem;padding:5px 9px;border-radius:999px;background:#eaf2ff;color:#275da8}
+    .badge.medium{background:#fff3db;color:#946000}
+  </style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark">&lt;/&gt;</div>
+    <div><strong>Programación · 1.º DAW</strong><span>IES Álvaro Falomir · Curso 2026/27</span></div>
+  </div>
+  <div class="top-actions">
+    <a class="btn ghost" href="index.html">← Ejercicios</a>
+    <a class="btn ghost" href="guia.html">Guía</a>
+    <a class="btn primary" href="https://www.pseint-web.app/" target="_blank" rel="noopener">Abrir PSeInt Web ↗</a>
+  </div>
+</header>
+
+<main class="page">
+  <section class="hero">
+    <span class="eyebrow">Práctica · Trazas y diagramas de flujo</span>
+    <h1>Trazas y organigramas</h1>
+    <p>Dos formas distintas de comprobar que entiendes un algoritmo: seguirlo paso a paso a mano (traza) y pasar de un diagrama de flujo al pseudocódigo que lo implementa.</p>
+    <p class="author-line"><strong>Autor:</strong> Rubén Pérez Ibáñez · Programación · 1.º DAW · IES Álvaro Falomir · Curso 2026/27</p>
+    <div class="hero-links">
+      <a class="btn ghost" href="#trazas">Ir a las trazas</a>
+      <a class="btn ghost" href="#organigramas">Ir a los organigramas</a>
+    </div>
+  </section>
+
+  <div class="progress-card">
+    <div class="progress-title"><span>Progreso de esta página</span><span id="progressPercent">0 % completado</span></div>
+    <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+    <small id="progressText">0 / 4</small>
+  </div>
+
+  <section class="chapter" id="trazas">
+    <span class="eyebrow">Bloque 1</span>
+    <h2>De código a traza</h2>
+    <p>Se te da un algoritmo ya escrito. Simula su ejecución a mano y completa la tabla con el valor de cada variable en cada vuelta, hasta llegar a la salida final.</p>
+    <div id="traceList"></div>
+  </section>
+
+  <section class="chapter" id="organigramas">
+    <span class="eyebrow">Bloque 2</span>
+    <h2>De organigrama a código</h2>
+    <p>Se te da el diagrama de flujo. Escribe el pseudocódigo en PSeInt que representa exactamente esa misma lógica y valídalo.</p>
+    <div id="flowList"></div>
+  </section>
+
+  <div class="practice">
+    <h3>¿Dudas sobre trazas o diagramas?</h3>
+    <p>Repasa la teoría con ejemplos resueltos antes de intentarlo aquí.</p>
+    <a class="btn primary" href="guia.html#traza">Ver teoría de trazas</a>
+    <a class="btn ghost" href="guia.html#diagramas">Ver teoría de diagramas de flujo</a>
+  </div>
+
+  <p class="footer">IES Álvaro Falomir · Programación · 1.º DAW · Curso 2026/27</p>
+</main>
+
+<script src="trazas.js"></script>
+</body>
+</html>
