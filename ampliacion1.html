@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="A1.1 · Ampliación (opcional) de P1.1 · Retos de algoritmos · Actividad opcional · 1.º DAW · IES Álvaro Falomir" />
+  <meta name="author" content="Rubén Pérez Ibáñez" />
+  <title>A1.1 · Ampliación (opcional) de P1.1 · Retos de algoritmos · 1.º DAW · IES Álvaro Falomir</title>
+  <link rel="stylesheet" href="guia.css" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="extras.css" />
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark">&lt;/&gt;</div>
+    <div><strong>Programación · 1.º DAW</strong><span>IES Álvaro Falomir · Curso 2026/27</span></div>
+  </div>
+  <div class="top-actions">
+    <a class="btn ghost" href="index.html">← Práctica P1.1</a>
+    <a class="btn ghost" href="refuerzo-ampliacion.html">Refuerzo y ampliación</a>
+    <a class="btn ghost" href="guia.html">Guía</a>
+    <a class="btn primary" href="https://www.pseint-web.app/" target="_blank" rel="noopener">Abrir PSeInt Web ↗</a>
+  </div>
+</header>
+
+<main class="page">
+  <section class="hero">
+    <span class="eyebrow">A1.1 · Ampliación de la práctica P1.1 <span class="optional-tag">Actividad opcional</span></span>
+    <h1>Retos de algoritmos</h1>
+    <p>Cinco retos sin plantilla: tú decides las variables, la estructura y los bucles. La validación ejecuta tu algoritmo con casos corrientes y casos límite, así que piensa también en ellos.</p>
+    <p class="raline"><b>RA1: Reconoce la estructura de un programa informático, identificando y relacionando los elementos propios del lenguaje de programación utilizado.</b><br>Criterios de evaluación trabajados: <b>1a, 1e, 1g</b>. <b>Actividad opcional</b>: no es necesaria para superar la práctica P1.1 (PSeInt paso a paso) y tiene su propio justificante.</p>
+    <p class="author-line"><strong>Autor:</strong> Rubén Pérez Ibáñez · Programación · 1.º DAW · IES Álvaro Falomir · Curso 2026/27</p>
+    <div class="hero-links">
+      <a class="btn ghost" href="guia.html#metodo">Método de trabajo recomendado</a>
+      <a class="btn ghost" href="guia.html#bucles">Repasar los bucles</a>
+    </div>
+  </section>
+
+  <div class="progress-card">
+    <div class="progress-title"><span>Progreso de esta actividad</span><span id="progressPercent">0 % completado</span></div>
+    <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+    <small id="progressText">0 / 0</small>
+  </div>
+
+  <section class="chapter" id="ejercicios">
+    <span class="eyebrow">Ejercicios</span>
+    <h2>Cómo trabajar</h2>
+    <p>Escribe el algoritmo desde cero en el editor y pulsa <b>Validar</b>. Ajusta el formato de salida exactamente a lo que pide el enunciado.</p>
+    <div id="exerciseList"></div>
+  </section>
+
+  <section class="chapter" id="justificante">
+    <span class="eyebrow">Para terminar</span>
+    <h2>Genera tu justificante en PDF</h2>
+    <p>Escribe tu nombre y apellidos y descarga un PDF con tu resultado en esta actividad opcional (A1.1). Es independiente del justificante de la práctica P1.1.</p>
+    <label for="studentNamePdf">Nombre y apellidos</label>
+    <input type="text" id="studentNamePdf" placeholder="Nombre y apellidos" autocomplete="name">
+    <div class="exercise-actions">
+      <button class="btn primary large" type="button" id="generatePdfBtn">Generar justificante en PDF</button>
+    </div>
+    <p class="finish-hint" id="pdfHint"></p>
+  </section>
+
+  <p class="footer">IES Álvaro Falomir · Programación · 1.º DAW · Curso 2026/27</p>
+</main>
+
+<script src="jspdf.umd.min.js"></script>
+<script src="pseint-mini.js"></script>
+<script src="ampliacion1.js"></script>
+<script src="extras-core.js"></script>
+</body>
+</html>

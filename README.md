@@ -29,3 +29,18 @@ La validación analiza la estructura del pseudocódigo y los elementos que requi
 ## Justificante
 
 El justificante se genera localmente en el navegador. Su código permite identificar una generación concreta, pero no constituye una firma digital ni un registro remoto de entrega.
+
+## Refuerzo y ampliación (opcionales)
+
+Cuatro actividades **opcionales**, independientes de las prácticas, que trabajan el mismo RA1 («Reconoce la estructura de un programa informático, identificando y relacionando los elementos propios del lenguaje de programación utilizado»). Portada: `refuerzo-ampliacion.html` (enlazada desde `index.html` y `trazas-organigramas.html`). Cada una tiene su propia página, su autovalidación, su progreso en `localStorage` (claves propias) y su justificante en PDF.
+
+| Código | Página | Práctica | Contenido | CE |
+|---|---|---|---|---|
+| R1.1 | `refuerzo1.html` | P1.1 | 6 ejercicios guiados con pistas (secuenciales y condicionales sencillos) | 1a, 1d, 1e |
+| A1.1 | `ampliacion1.html` | P1.1 | 5 retos de algoritmos sin plantilla | 1a, 1e, 1g |
+| R1.2 | `refuerzo2.html` | P1.2 | 5 trazas en tabla de variables, contrastadas con PSeInt paso a paso | 1a, 1d |
+| A1.2 | `ampliacion2.html` | P1.2 | 5 organigramas propios con prueba de escritorio de casos límite | 1a, 1g |
+
+Ficheros: `pseint-mini.js` (mini intérprete de PSeInt que ejecuta el algoritmo del alumno con casos de prueba), `extras-core.js` (motor común: render, validación, progreso y PDF), `extras.css` y un fichero de datos por actividad (`refuerzo1.js`, `ampliacion1.js`, `refuerzo2.js`, `ampliacion2.js`). Las prácticas P1.1 y P1.2 (`app.js`, `trazas.js`) no se han modificado.
+
+Pruebas: `node tests/extras.test.js` comprueba que la solución de referencia (`tests/solutions.js`, no publicada en las páginas) completa cada ejercicio y que las plantillas vacías no.

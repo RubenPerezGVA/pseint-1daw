@@ -1,0 +1,38 @@
+/* A1.1 · Ampliación (opcional) de P1.1 · Retos de algoritmos sin plantilla */
+window.ACTIVITY = {
+  code:'A1.1', ce:'1a, 1e, 1g',
+  storageKey:'falomir_pseint_2026_27_a11_v1', receiptPrefix:'UP1A1', filePrefix:'ampliacion1',
+  activity:'UP1 · A1.1 · Ampliación (opcional) de P1.1 · Retos de algoritmos',
+  exercises:[
+    {id:'a11-1', level:'Medio', title:'Reloj: de segundos a h, min y s',
+      desc:'Lee un número entero de segundos y muéstralo descompuesto en horas, minutos y segundos. Usa la división entera (<b>trunc</b>) y el resto (<b>MOD</b>). Muestra los tres valores en este orden: horas, minutos, segundos.',
+      example:'3725 → 1 h 2 min 5 s\n59 → 0 h 0 min 59 s\n86399 → 23 h 59 min 59 s',
+      placeholder:'Escribe aquí tu algoritmo desde cero (Algoritmo ... FinAlgoritmo)', template:'',
+      needs:[{re:/mod/,msg:'Usa MOD para obtener los segundos y minutos sobrantes.'},{re:/leer/,msg:'Falta Leer.'}],
+      tests:[{in:[3725],seq:[1,2,5],reads:1},{in:[59],seq:[0,0,59]},{in:[3600],seq:[1,0,0]},{in:[86399],seq:[23,59,59]},{in:[0],seq:[0,0,0]}]},
+    {id:'a11-2', level:'Medio', title:'Clasifica el triángulo',
+      desc:'Lee los tres lados de un triángulo. Si no forman un triángulo (cada lado debe ser <b>estrictamente menor</b> que la suma de los otros dos), muestra <b>No es un triángulo</b>. Si lo forman, muestra <b>Equilátero</b> (3 lados iguales), <b>Isósceles</b> (exactamente 2 iguales) o <b>Escaleno</b> (ninguno igual).',
+      example:'3 3 3 → Equilátero\n3 3 5 → Isósceles\n3 4 5 → Escaleno\n1 2 3 → No es un triángulo',
+      placeholder:'Escribe aquí tu algoritmo desde cero…', template:'',
+      needs:[{re:/\b(y|o)\b|&&|\|\|/,msg:'Combina condiciones con Y / O.'},{re:/sino/,msg:'Falta SiNo.'}],
+      tests:[{in:[3,3,3],has:['equilatero'],not:['no es','isosceles','escaleno']},{in:[3,3,5],has:['isosceles'],not:['no es','equilatero','escaleno']},{in:[5,3,3],has:['isosceles']},{in:[3,5,3],has:['isosceles']},{in:[3,4,5],has:['escaleno'],not:['no es','isosceles']},{in:[1,2,3],has:['no es un triangulo']},{in:[10,1,1],has:['no es un triangulo']},{in:[2,2,4],has:['no es un triangulo']}]},
+    {id:'a11-3', level:'Medio', title:'Fizz Buzz hasta N',
+      desc:'Lee un número N y muestra, <b>uno por línea</b>, los números del 1 al N, pero sustituyendo los múltiplos de 3 por <b>Fizz</b>, los de 5 por <b>Buzz</b> y los de ambos (15) por <b>FizzBuzz</b>. No muestres nada más.',
+      example:'N=5 → 1, 2, Fizz, 4, Buzz\nN=15 → ... 14, FizzBuzz',
+      placeholder:'Escribe aquí tu algoritmo desde cero…', template:'',
+      needs:[{re:/mod/,msg:'Usa MOD para detectar múltiplos.'},{re:/\bpara\b|\bmientras\b|\brepetir\b/,msg:'Necesitas un bucle (Para, Mientras o Repetir).'}],
+      tests:[{in:[5],seq:[1,2,'Fizz',4,'Buzz'],exact:true},{in:[15],seq:[1,2,'Fizz',4,'Buzz','Fizz',7,8,'Fizz','Buzz',11,'Fizz',13,14,'FizzBuzz'],exact:true},{in:[1],seq:[1],exact:true},{in:[30],seq:[1,2,'Fizz',4,'Buzz','Fizz',7,8,'Fizz','Buzz',11,'Fizz',13,14,'FizzBuzz',16,17,'Fizz',19,'Buzz','Fizz',22,23,'Fizz','Buzz',26,'Fizz',28,29,'FizzBuzz'],exact:true}]},
+    {id:'a11-4', level:'Reto', title:'¿Primo o compuesto?',
+      desc:'Lee un entero N. Si N < 2, muestra <b>No válido</b>. Si N es primo (solo divisible por 1 y por sí mismo), muestra <b>Primo</b>; en otro caso, <b>Compuesto</b>. Piensa un bucle que pruebe divisores y que se detenga en cuanto encuentre uno.',
+      example:'17 → Primo\n21 → Compuesto\n2 → Primo\n1 → No válido',
+      placeholder:'Escribe aquí tu algoritmo desde cero…', template:'',
+      needs:[{re:/mod/,msg:'Usa MOD para comprobar si un divisor divide a N.'},{re:/\bmientras\b|\bpara\b|\brepetir\b/,msg:'Necesitas un bucle para probar divisores.'}],
+      tests:[{in:[17],has:['primo'],not:['compuesto','no valido']},{in:[21],has:['compuesto'],not:['primo']},{in:[2],has:['primo'],not:['compuesto']},{in:[4],has:['compuesto']},{in:[1],has:['no valido'],not:['primo','compuesto']},{in:[0],has:['no valido']},{in:[97],has:['primo'],not:['compuesto']},{in:[91],has:['compuesto']},{in:[-7],has:['no valido']}]},
+    {id:'a11-5', level:'Reto', title:'Cambio en billetes y monedas',
+      desc:'Lee una cantidad entera de euros y descomponla con el menor número de billetes y monedas de <b>50, 20, 10, 5, 2 y 1</b> €. Muestra únicamente <b>seis números</b>, uno por línea y en ese orden: cuántas unidades de 50, de 20, de 10, de 5, de 2 y de 1.',
+      example:'87 → 1, 1, 1, 1, 1, 0\n199 → 3, 2, 0, 1, 2, 0',
+      placeholder:'Escribe aquí tu algoritmo desde cero…', template:'',
+      needs:[{re:/mod/,msg:'Usa MOD para quedarte con lo que falta por repartir.'},{re:/trunc|redon|\//,msg:'Usa la división (con trunc) para contar cuántas unidades caben.'}],
+      tests:[{in:[87],seq:[1,1,1,1,1,0],exact:true},{in:[199],seq:[3,2,0,1,2,0],exact:true},{in:[0],seq:[0,0,0,0,0,0],exact:true},{in:[1],seq:[0,0,0,0,0,1],exact:true},{in:[7],seq:[0,0,0,1,1,0],exact:true},{in:[50],seq:[1,0,0,0,0,0],exact:true}]}
+  ]
+};
