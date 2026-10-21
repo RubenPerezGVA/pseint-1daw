@@ -162,7 +162,6 @@ function generatePdf(){
   field('Actividad:',A.activity);
   field('Tipo:','Actividad opcional · RA1 · CE '+A.ce);
   field('Resultado:',`${done} / ${total} (${pct} %)`);
-  field('Nota orientativa:',`${grade.toFixed(2)} / 10`);
   field('Fecha y hora:',when);
   field('Código:',code);
   y+=4;doc.setFont('helvetica','bold');doc.setFontSize(12);doc.text('Detalle por ejercicio',mx,y);y+=8;doc.setFontSize(10);

@@ -2,6 +2,17 @@
 
 Material para el IES Álvaro Falomir, curso 2026/27.
 
+## Unidad de programación
+
+**UP1 · Introducción a la programación: PSeInt, algoritmos, trazas y organigramas** · 16 h · 09/09/2026 – 24/09/2026 · 1.ª evaluación · RA1.
+
+| Práctica | Página | Contenido | CE (RA1) |
+|---|---|---|---|
+| P1.1 | `index.html` | Batería de 30 ejercicios autocorregibles de PSeInt (web autovalidada + justificante) | a, d, e, g, i |
+| P1.2 | `trazas-organigramas.html` | Trazas y organigramas / diagramas de flujo (web autovalidada + justificante) | a, d, g |
+
+Evaluación (según la programación didáctica): las prácticas se califican **Apto / No apto** y pesan un **10 %** de la nota de la evaluación; el examen de la 1.ª evaluación pesa un **90 %**. Los justificantes de las webs no son una calificación. Refuerzo y ampliación son opcionales y no tienen nota.
+
 ## Contenido
 
 - 30 ejercicios progresivos de PSeInt, sin vectores.
@@ -32,7 +43,7 @@ El justificante se genera localmente en el navegador. Su código permite identif
 
 ## Refuerzo y ampliación (opcionales)
 
-Cuatro actividades **opcionales**, independientes de las prácticas, que trabajan el mismo RA1 («Reconoce la estructura de un programa informático, identificando y relacionando los elementos propios del lenguaje de programación utilizado»). Portada: `refuerzo-ampliacion.html` (enlazada desde `index.html` y `trazas-organigramas.html`). Cada una tiene su propia página, su autovalidación, su progreso en `localStorage` (claves propias) y su justificante en PDF.
+Cuatro actividades **opcionales y sin nota**, independientes de las prácticas, que trabajan el mismo RA1 («Reconoce la estructura de un programa informático, identificando y relacionando los elementos propios del lenguaje de programación utilizado»). Portada: `refuerzo-ampliacion.html` (enlazada desde `index.html` y `trazas-organigramas.html`). Cada una tiene su propia página, su autovalidación, su progreso en `localStorage` (claves propias) y su justificante en PDF.
 
 | Código | Página | Práctica | Contenido | CE |
 |---|---|---|---|---|

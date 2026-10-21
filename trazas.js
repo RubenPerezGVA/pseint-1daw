@@ -408,7 +408,6 @@ function generatePdfReport(){
   field('Alumno/a:', name);
   field('Actividad:', 'Trazas y organigramas (PSeInt)');
   field('Resultado:', `${done} / ${total} (${pct} %)`);
-  field('Nota:', `${grade.toFixed(2)} / 10`);
   field('Fecha y hora:', when);
   field('Código de verificación:', code);
   y += 4;
